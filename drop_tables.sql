@@ -1,0 +1,10 @@
+DROP TABLE IF EXISTS air_pollution_staging;
+DROP TABLE IF EXISTS air_station_staging;
+DROP TABLE IF EXISTS population_staging;
+DROP TABLE IF EXISTS covid_staging;
+DROP TABLE IF EXISTS air_pollution;
+DROP TABLE IF EXISTS air_stations;
+DROP TABLE IF EXISTS pollutants;
+DROP TABLE IF EXISTS covid_numbers;
+DROP TABLE IF EXISTS counties;
+DROP TABLE IF EXISTS county_population;
