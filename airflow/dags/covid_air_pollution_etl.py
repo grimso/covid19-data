@@ -34,8 +34,8 @@ stage_air_pollution_to_redshift = StageToRedshiftOperator(
     dag=dag,
     table="air_pollution_staging",
     s3_bucket="covid-19de",
-    s3_key="air_quality",
-    parameter=["IGNOREHEADER 1","DELIMITER ';'","DATEFORMAT 'DD.MM.YYYY'","IGNOREBLANKLINES","MAXERROR 6","TRUNCATECOLUMNS","REMOVEQUOTES"]
+    s3_key="air_pollution",
+    parameter=["IGNOREHEADER 1","DELIMITER ';'","DATEFORMAT 'DD.MM.YYYY'","IGNOREBLANKLINES","MAXERROR 6","TRUNCATECOLUMNS","REMOVEQUOTES","GZIP" ]
 )
 
 stage_air_stations_to_redshift = StageToRedshiftOperator(
@@ -61,8 +61,8 @@ stage_covid_to_redshift = StageToRedshiftOperator(
     dag=dag,
     table="covid_staging",
     s3_bucket="covid-19de",
-    s3_key="test_covid(1).json",
-    parameter=["FORMAT AS JSON 's3://covid-19de/rki_covid_json_path.json'"]
+    s3_key="covid_numbers",
+    parameter=["FORMAT AS JSON 's3://covid-19de/rki_covid_json_path.json'","TRUNCATECOLUMNS","GZIP" ]
 )
 data_cleaning_air_pollution_staging=("""UPDATE air_pollution_staging SET time=NULL WHERE time='-'; 
 UPDATE air_pollution_staging SET value=NULL WHERE value='-'; 
