@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS public.air_pollution_staging(
     station_code varchar(256),
     station_name varchar(256),
     station_surrounding varchar(256),
-    station_type varchar(2565),
+    station_type varchar(256),
     pollutant varchar(256),
     evaluation_kind varchar(256),
     date date,
