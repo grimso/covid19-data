@@ -1,7 +1,6 @@
 from __future__ import division, absolute_import, print_function
 
 from airflow.plugins_manager import AirflowPlugin
-
 import operators
 import helpers
 
@@ -12,7 +11,9 @@ class ETLPlugin(AirflowPlugin):
         operators.StageToRedshiftOperator,
         operators.LoadFactOperator,
         operators.LoadDimensionOperator,
-        operators.DataQualityOperator
+        operators.DataQualityOperator,
+        operators.CovidApiToS3Operator,
+        operators.AirPollutionApiToS3Operator
     ]
     helpers = [
         helpers.SqlQueries
