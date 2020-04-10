@@ -13,6 +13,8 @@ The [Robert Koch Institut](https://www.rki.de)  continously monitors covid cases
 ...
 ```
 
+A complete covid data set, which was fetched from the API on 2020-04-09 can be found [here](https://github.com/grimso/covid19-data/blob/master/data/covid_numbers/2020-04-09.json.gz)
+
 ### Air pollution
 The [Umweltbundesamt](https://www.umweltbundesamt.de/) collects [air data](https://www.umweltbundesamt.de/en/data/air/air-data) from stations in Germany. Pollutants include particulate matter (PM10),carbon monoxide (CO), nitrogen dioxide (NO2), Ozone (O3), and sulphur dioxide (SO2). Data for each pollutant is availabe in different time scales (hourly, daily) and can be fetched as a CSV file from a public API. Example of CSV format:
 ```
@@ -21,12 +23,15 @@ Brandenburg;DEBB007;Elsterwerda;"vorstädtisches Gebiet";Hintergrund;"Feinstaub 
 Brandenburg;DEBB007;Elsterwerda;"vorstädtisches Gebiet";Hintergrund;"Feinstaub (PM₁₀)";"Tagesmittel (1TMW)";02.03.2020;-;5;µg/m³
 ...
 ```
+Historical air pollution data collected from the Umwelbundesamt API (2019-01-01 until 2020-03-31) can be found [here](https://github.com/grimso/covid19-data/blob/master/data/air_quality-2019-01-01_2020-03-31.tar.gz).
 
 ### Population 
 
-The [Regionaldatenbank Deutschland](https://www.regionalstatistik.de) provides access to official statistics from federal and state authorities in Germany. Population information on county level, which is partitioned by age groups was retrived from [here](https://www.regionalstatistik.de/genesis/online/data;sid=42E8FFFDC6E60572967A61B6075081E8.reg1?operation=abruftabelleAbrufen&selectionname=12411-02-03-5-B&levelindex=1&levelid=1586513810882&index=6)
+The [Regionaldatenbank Deutschland](https://www.regionalstatistik.de) provides access to official statistics from federal and state authorities in Germany. Population information on county level, which is partitioned by age groups was retrived from [here](https://www.regionalstatistik.de/genesis/online/data;sid=42E8FFFDC6E60572967A61B6075081E8.reg1?operation=abruftabelleAbrufen&selectionname=12411-02-03-5-B&levelindex=1&levelid=1586513810882&index=6).
 
-Using Google's [Geocoding API](https://developers.google.com/maps/documentation/geocoding/start) the population data was augmented with geolocation (latitude,longitude) information for each county.
+Using Google's [Geocoding API](https://developers.google.com/maps/documentation/geocoding/start) the population data was augmented with geolocation (latitude,longitude) information for each county. Details can be found [here] (https://github.com/grimso/covid19-data/blob/master/Process_Population_GER.ipynb).
+
+The processed population data can be found [here](https://github.com/grimso/covid19-data/blob/master/data/processed/population_germany.csv).
 
 ## Project Design 
 
@@ -58,7 +63,7 @@ The pipeline is scheduled to run every day to fetch the latest data and update t
 A scalable and reproducible data workflow was created which is ready for following scenarios:
 1) The data was increased by 100x.
 
-The underlying infrastructure can be scaled easily with respect to worker nodes and size of the redshift cluster.
+The underlying infrastructure can be scaled easily with respect to worker nodes and size of the redshift cluster. In addition fetching the data from public APIs is logical partitional on a daily basis, such that only data for a dingle day is processed at once.
 
 2) The pipelines would be run on a daily basis by 7 am every day.
 
@@ -70,3 +75,7 @@ If performance bottle necks arise the redhisft cluster can be scaled accordingly
 
 
 ## Repository Structure
+
+ `data`: all relevant project data resides here and is described above
+ 
+ `airflow`: Implementation of data pipeline using Apache Airflow. Contains all custom Airflow operators and ETL logic to process data from public APIs and S3 to final dimension tables in Amazon Redshift. The DAG definition for the data pipeline depicted above is located at `airflow/dags/covid_air_pollution_data_pipeline.py`
