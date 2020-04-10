@@ -3,8 +3,9 @@ from airflow.contrib.hooks.aws_hook import AwsHook
 from airflow.models import BaseOperator
 from airflow.utils.decorators import apply_defaults
 
+
 class StageToRedshiftOperator(BaseOperator):
-    ui_color = '#358140'
+    ui_color = "#358140"
     template_fields = ("s3_key",)
     copy_sql = """
         COPY {}
@@ -16,16 +17,19 @@ class StageToRedshiftOperator(BaseOperator):
     """
 
     @apply_defaults
-    def __init__(self,
-                 redshift_conn_id="redshift",
-                 aws_credentials_id="aws_credentials",
-                 table="",
-                 s3_bucket="",
-                 s3_key="",
-                 region="us-west-2",
-                 parameter=[],
-                 time_partition=None,
-                 *args, **kwargs):
+    def __init__(
+        self,
+        redshift_conn_id="redshift",
+        aws_credentials_id="aws_credentials",
+        table="",
+        s3_bucket="",
+        s3_key="",
+        region="us-west-2",
+        parameter=[],
+        time_partition=None,
+        *args,
+        **kwargs
+    ):
 
         super(StageToRedshiftOperator, self).__init__(*args, **kwargs)
         self.table = table
@@ -33,10 +37,10 @@ class StageToRedshiftOperator(BaseOperator):
         self.s3_bucket = s3_bucket
         self.s3_key = s3_key
         self.aws_credentials_id = aws_credentials_id
-        self.region=region
-        self.time_partition=time_partition
-        self.execution_time=kwargs.get("execution_time",None)
-        self.parameter=parameter
+        self.region = region
+        self.time_partition = time_partition
+        self.execution_time = kwargs.get("execution_time", None)
+        self.parameter = parameter
 
     def execute(self, context):
         aws_hook = AwsHook(self.aws_credentials_id)
@@ -56,11 +60,6 @@ class StageToRedshiftOperator(BaseOperator):
             credentials.access_key,
             credentials.secret_key,
             self.region,
-            "\n".join(self.parameter)
+            "\n".join(self.parameter),
         )
         redshift.run(formatted_sql)
-
-
-
-
-

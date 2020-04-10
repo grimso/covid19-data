@@ -6,10 +6,10 @@ from operators.data_api import CovidApiToS3Operator
 from operators.data_api import AirPollutionApiToS3Operator
 
 __all__ = [
-    'StageToRedshiftOperator',
-    'LoadFactOperator',
-    'LoadDimensionOperator',
-    'DataQualityOperator',
-    'CovidApiToS3Operator',
-    'AirPollutionApiToS3Operator'
+    "StageToRedshiftOperator",
+    "LoadFactOperator",
+    "LoadDimensionOperator",
+    "DataQualityOperator",
+    "CovidApiToS3Operator",
+    "AirPollutionApiToS3Operator",
 ]
