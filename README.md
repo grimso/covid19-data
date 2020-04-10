@@ -3,7 +3,7 @@
 The  Covid 19 pandemic has a trastic affect on our lives and economy and therefore potentially on air quality.
 In this project a data pipeline was build to update air pollutiona data and covid numbers in Germany on a daily bases and integrate additional data on Germany's population and air stations. To facilitate further analyisis an efficent data model was designed to make data available through Amazon Redshift database.
 
-## Data
+## Data Sets and Data Sources
 
 ### Covid Cases 
 The [Robert Koch Institut](https://www.rki.de)  continously monitors covid cases in Germany. The data is updated regularly and accessibele by means of a public [API](https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/dd4580c810204019a7b8eb3e0b329dd6_0/geoservice?page=2577). Using pagination all data is fetched from this API, relevant information is extracted and stored in a S3 bucket. The resulting JSON format is as follows:
@@ -28,16 +28,45 @@ The [Regionaldatenbank Deutschland](https://www.regionalstatistik.de) provides a
 
 Using Google's [Geocoding API](https://developers.google.com/maps/documentation/geocoding/start) the population data was augmented with geolocation (latitude,longitude) information for each county.
 
-## Data Warehouse Infrastructure
+## Project Design 
+
+### Data Warehouse Infrastructure
 
 ![Infrastructure](images/Infrastructure.png)
 
-Amazon Redshift is used to build a scalable data warehouse, including staging, processing and transformation to final dimension tables. Data sources are collected in Amazon S3 bucket. Apache Airflow is used to glue togetehr all parts and orchestrate the data pipeline.
+Amazon Redshift was used to build a scalable data warehouse, including staging, processing and transformation to final dimension tables. Data sources are collected in Amazon S3 bucket. Apache Airflow is used to glue togetehr all parts and orchestrate the data pipeline.
 
-## Data Model
+### Data Model
 
 A star schema consisting of fact and dimension tables was choosen to model covid and air pollution numbers. As a a denormalized schema it simplifies queries and allows fast aggregations, hence enabling efficient analyisis.
 
 ![DataModel](images/DataModel.png)
 
-## Data Pipeline
+### Data Pipeline
+
+An automatic and reproducable data pipeline was build with Apache Airflow as workflow orchestrator. The pipeline consits of 3 major parts:
+1) Fetch covid cases and air pollution data from external APIs and store in S3 bucket.
+2) Stage all data sources from S3 to Redshift, check quality of staged data
+3) ETL Pipeline to process staged data into final dimension tables, check quality of final tables
+
+The pipeline is scheduled to run every day to fetch the latest data and update the database tables accordingly.
+
+![DataPipeline](images/DataPipeline.PNG)
+
+### Conclusion
+
+A scalable and reproducible data workflow was created which is ready for following scenarios:
+1) The data was increased by 100x.
+
+The underlying infrastructure can be scaled easily with respect to worker nodes and size of the redshift cluster.
+
+2) The pipelines would be run on a daily basis by 7 am every day.
+
+Apache Airflow as data pipline orchestrator allows configuration when a data pipleine should be schedlued (In this project on a daily basis).
+
+3) The database needed to be accessed by 100+ people
+
+If performance bottle necks arise the redhisft cluster can be scaled accordingly.
+
+
+## Repository Structure
