@@ -1,0 +1,20 @@
+{
+    "jsonpaths": [
+        "$['IdBundesland']",
+        "$['Bundesland']",
+        "$['Landkreis']",
+        "$['Altersgruppe']",
+        "$['Geschlecht']",
+        "$['AnzahlFall']",
+        "$['AnzahlTodesfall']",
+        "$['ObjectId']",
+        "$['Meldedatum']",
+        "$['IdLandkreis']",
+        "$['Datenstand']",
+        "$['NeuerFall']",
+        "$['NeuerTodesfall']",
+        "$['Refdatum']",
+        "$['NeuGenesen']",
+        "$['AnzahlGenesen']"
+    ]
+}
