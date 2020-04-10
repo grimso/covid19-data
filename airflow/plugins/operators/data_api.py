@@ -25,7 +25,7 @@ def fetch_and_extract_covid_data_from_rki():
 
 
 class CovidApiToS3Operator(BaseOperator):
-    ui_color = '#358140'
+    ui_color = '#ccccff'
     template_fields = ("s3_key",)
 
 
