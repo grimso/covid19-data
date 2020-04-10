@@ -33,3 +33,7 @@ Using Google's [Geocoding API](https://developers.google.com/maps/documentation/
 ![Infrastructure](images/Infrastructure.png)
 
 Amazon Redshift is used to build a scalable data warehouse, including staging, processing and transformation to final dimension tables. Data sources are collected in Amazon S3 bucket. Apache Airflow is used to glue togetehr all parts and orchestrate the data pipeline.
+
+## Data Model
+
+A star schema consiting of fact and dimension tables was choosen to model covid and air pollution numbers. As a a denormalized schema it simplifies queries and allows fast aggregations, hence enabling efficient 
