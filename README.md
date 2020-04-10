@@ -30,5 +30,6 @@ Using Google's [Geocoding API](https://developers.google.com/maps/documentation/
 
 ## Data Warehouse Infrastructure
 
+![Infrastructure](images/Infrastructure.png)
 
-
+Amazon Redshift is used to build a scalable data warehouse, including staging, processing and transformation to final dimension tables. Data sources are collected in Amazon S3 bucket. Apache Airflow is used to glue togetehr all parts and orchestrate the data pipeline.
