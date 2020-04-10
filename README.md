@@ -36,4 +36,8 @@ Amazon Redshift is used to build a scalable data warehouse, including staging, p
 
 ## Data Model
 
-A star schema consiting of fact and dimension tables was choosen to model covid and air pollution numbers. As a a denormalized schema it simplifies queries and allows fast aggregations, hence enabling efficient 
+A star schema consisting of fact and dimension tables was choosen to model covid and air pollution numbers. As a a denormalized schema it simplifies queries and allows fast aggregations, hence enabling efficient analyisis.
+
+![DataModel](images/DataModel.png)
+
+## Data Pipeline
