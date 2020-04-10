@@ -28,7 +28,7 @@ The [Regionaldatenbank Deutschland](https://www.regionalstatistik.de) provides a
 
 Using Google's [Geocoding API](https://developers.google.com/maps/documentation/geocoding/start) the population data was augmented with geolocation (latitude,longitude) information for each county.
 
-## Data Pipeline
+## Data Warehouse Infrastructure
 
 
 
