@@ -29,7 +29,7 @@ Historical air pollution data collected from the Umwelbundesamt API (2019-01-01 
 
 The [Regionaldatenbank Deutschland](https://www.regionalstatistik.de) provides access to official statistics from federal and state authorities in Germany. Population information on county level, which is partitioned by age groups was retrived from [here](https://www.regionalstatistik.de/genesis/online/data;sid=42E8FFFDC6E60572967A61B6075081E8.reg1?operation=abruftabelleAbrufen&selectionname=12411-02-03-5-B&levelindex=1&levelid=1586513810882&index=6).
 
-Using Google's [Geocoding API](https://developers.google.com/maps/documentation/geocoding/start) the population data was augmented with geolocation (latitude,longitude) information for each county. Details can be found [here] (https://github.com/grimso/covid19-data/blob/master/Process_Population_GER.ipynb).
+Using Google's [Geocoding API](https://developers.google.com/maps/documentation/geocoding/start) the population data was augmented with geolocation (latitude,longitude) information for each county. Details can be found [here](https://github.com/grimso/covid19-data/blob/master/Process_Population_GER.ipynb).
 
 The processed population data can be found [here](https://github.com/grimso/covid19-data/blob/master/data/processed/population_germany.csv).
 
