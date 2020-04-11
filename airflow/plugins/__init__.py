@@ -14,5 +14,6 @@ class ETLPlugin(AirflowPlugin):
         operators.DataQualityOperator,
         operators.CovidApiToS3Operator,
         operators.AirPollutionApiToS3Operator,
+        operators.DimensionTableQualityOperator,
     ]
     helpers = [helpers.SqlQueries]
