@@ -7,9 +7,10 @@ from airflow.operators.etl_plugin import (
     LoadFactOperator,
     LoadDimensionOperator,
     DataQualityOperator,
+    DimensionTableQualityOperator,
+    CovidApiToS3Operator,
+    AirPollutionApiToS3Operator,
 )
-from airflow.operators.etl_plugin import CovidApiToS3Operator
-from airflow.operators.etl_plugin import AirPollutionApiToS3Operator
 from helpers import SqlQueries
 from airflow.operators.postgres_operator import PostgresOperator
 
@@ -159,7 +160,7 @@ run_quality_checks_staging = DataQualityOperator(
 )
 
 run_quality_checks_final = DataQualityOperator(
-    task_id="Data_quality_check_final",
+    task_id="Data_quality_check_empty_tables",
     dag=dag,
     tables_to_check=[
         "air_pollution",
@@ -169,6 +170,38 @@ run_quality_checks_final = DataQualityOperator(
         "counties",
         "county_population",
     ],
+)
+
+run_check_pollutants = DimensionTableQualityOperator(
+    task_id="Check_pollutant_complete",
+    dag=dag,
+    fact_table="air_pollution",
+    dimension_table="pollutants",
+    table_key="station_id",
+)
+
+run_check_air_stations = DimensionTableQualityOperator(
+    task_id="Check_air_stations_complete",
+    dag=dag,
+    fact_table="air_pollution",
+    dimension_table="air_stations",
+    table_key="pollutant_id",
+)
+
+run_check_counties = DimensionTableQualityOperator(
+    task_id="Check_counties_complete",
+    dag=dag,
+    fact_table="covid_numbers",
+    dimension_table="counties",
+    table_key="county_id",
+)
+
+run_check_county_population = DimensionTableQualityOperator(
+    task_id="Check_county_population_complete",
+    dag=dag,
+    fact_table="covid_numbers",
+    dimension_table="county_population",
+    table_key="county_id",
 )
 
 data_api_fetched = DummyOperator(task_id="Fetched_data_from_api", dag=dag)
@@ -195,4 +228,11 @@ run_quality_checks_staging >> [
     covid_numbers_load,
     counties_load,
     population_load,
-] >> run_quality_checks_final >> end_operator
+] >> run_quality_checks_final
+
+run_quality_checks_final >> [
+    run_check_pollutants,
+    run_check_air_stations,
+    run_check_counties,
+    run_check_county_population,
+] >> end_operator
