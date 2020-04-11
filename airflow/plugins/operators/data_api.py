@@ -61,7 +61,7 @@ class CovidApiToS3Operator(BaseOperator):
 
 
 class AirPollutionApiToS3Operator(BaseOperator):
-    ui_color = "#358140"
+    ui_color = "#ccccff"
 
     polutant_info = {
         "PM10": {"id": 1, "eval_id": 1},
