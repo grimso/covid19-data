@@ -1,0 +1,1 @@
+apache-airflow[aws,postgres]==1.10.10
