@@ -2,7 +2,7 @@ from __future__ import division, absolute_import, print_function
 
 from airflow.plugins_manager import AirflowPlugin
 import operators
-import helpers
+import data_logic
 
 # Defining the plugin class
 class ETLPlugin(AirflowPlugin):
@@ -16,4 +16,4 @@ class ETLPlugin(AirflowPlugin):
         operators.AirPollutionApiToS3Operator,
         operators.DimensionTableQualityOperator,
     ]
-    helpers = [helpers.SqlQueries]
+    helpers = [data_logic.SqlQueries]

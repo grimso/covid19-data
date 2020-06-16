@@ -1,4 +1,4 @@
-from helpers.sql_queries import SqlQueries
+from data_logic.sql_queries import SqlQueries
 
 __all__ = [
     "SqlQueries",
